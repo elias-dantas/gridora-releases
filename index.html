@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Gridora - Gerador inteligente de escalas de trabalho que respeita automaticamente a CLT e a EC 141/2026. Evite multas trabalhistas.">
+    <meta name="keywords" content="escala de trabalho, 5x2, 6x1, 4x3, EC 141/2026, CLT, gestão de escalas, software offline">
+    <title>Gridora - Escalas de Trabalho 100% dentro da CLT</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <style>
+        :root {
+            --cyan: #06b6d4;
+            --blue: #3b82f6;
+            --emerald: #10b981;
+            --amber: #f59e0b;
+            --red: #ef4444;
+            --violet: #8b5cf6;
+            --dark: #0b1120;
+            --dark-2: #0f172a;
+            --dark-3: #1e293b;
+            --gray: #64748b;
+            --light: #f1f5f9;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ============================================================
+           NAVBAR
+           ============================================================ */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(11, 17, 32, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--white);
+            font-weight: 800;
+            font-size: 1.25rem;
+        }
+
+        .navbar-brand-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--cyan), var(--blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(6, 182, 212, 0.35);
+        }
+
+        .navbar-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .navbar-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .navbar-links a:hover {
+            color: var(--cyan);
+        }
+
+        .navbar-cta {
+            background: linear-gradient(135deg, var(--cyan), var(--blue));
+            color: #fff !important;
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600 !important;
+            transition: transform 0.2s, box-shadow 0.2s !important;
+        }
+
+        .navbar-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(6, 182, 212, 0.4);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* ============================================================
+           HERO
+           ============================================================ */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 8rem 2rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            right: -200px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -200px;
+            left: -200px;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(6, 182, 212, 0.1);
+            color: var(--cyan);
+            padding: 0.5rem 1rem;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(6, 182, 212, 0.2);
+        }
+
+        .hero-text h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-text h1 .gradient {
+            background: linear-gradient(135deg, var(--cyan), var(--blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+            max-width: 540px;
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.9rem 1.8rem;
+            border-radius: 10px;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--cyan), var(--blue));
+            color: #fff;
+            box-shadow: 0 8px 24px rgba(6, 182, 212, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(6, 182, 212, 0.45);
+            color: #fff;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--light);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+        }
+
+        .hero-trust {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        .hero-trust span {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .hero-trust i {
+            color: var(--emerald);
+        }
+
+        .hero-visual {
+            position: relative;
+        }
+
+        .hero-screenshot {
+            width: 100%;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+            background: var(--dark-2);
+            padding: 1rem;
+        }
+
+        .hero-screenshot img {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .hero-screenshot-placeholder {
+            width: 100%;
+            aspect-ratio: 16/10;
+            background: linear-gradient(135deg, var(--dark-3), var(--dark-2));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            font-size: 0.9rem;
+            border: 2px dashed rgba(255, 255, 255, 0.1);
+        }
+
+        /* ============================================================
+           SECTIONS GERAIS
+           ============================================================ */
+        section {
+            padding: 6rem 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header .tag {
+            display: inline-block;
+            color: var(--cyan);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .section-header p {
+            color: var(--gray);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ============================================================
+           PROBLEMA
+           ============================================================ */
+        .problem {
+            background: var(--dark-2);
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .problem-card {
+            background: var(--dark-3);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .problem-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .problem-card .icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--red);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .problem-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .problem-card p {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        /* ============================================================
+           FEATURES
+           ============================================================ */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .feature-card {
+            background: var(--dark-2);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.2s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(6, 182, 212, 0.3);
+        }
+
+        .feature-card .icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            background: rgba(6, 182, 212, 0.1);
+            color: var(--cyan);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card:nth-child(2) .icon { background: rgba(16, 185, 129, 0.1); color: var(--emerald); }
+        .feature-card:nth-child(3) .icon { background: rgba(245, 158, 11, 0.1); color: var(--amber); }
+        .feature-card:nth-child(4) .icon { background: rgba(139, 92, 246, 0.1); color: var(--violet); }
+        .feature-card:nth-child(5) .icon { background: rgba(59, 130, 246, 0.1); color: var(--blue); }
+        .feature-card:nth-child(6) .icon { background: rgba(239, 68, 68, 0.1); color: var(--red); }
+
+        .feature-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        /* ============================================================
+           COMO FUNCIONA
+           ============================================================ */
+        .how-it-works {
+            background: var(--dark-2);
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            position: relative;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--cyan), var(--blue));
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 8px 24px rgba(6, 182, 212, 0.3);
+        }
+
+        .step h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .step p {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        /* ============================================================
+           PREÇOS
+           ============================================================ */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: var(--dark-2);
+            padding: 2.5rem 2rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            transition: transform 0.2s;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .pricing-card.featured {
+            border-color: var(--cyan);
+            background: linear-gradient(180deg, rgba(6, 182, 212, 0.05), var(--dark-2));
+        }
+
+        .pricing-card.featured::before {
+            content: 'MAIS POPULAR';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--cyan), var(--blue));
+            color: #fff;
+            padding: 0.3rem 1rem;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-card .price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 1rem 0;
+        }
+
+        .pricing-card .price small {
+            font-size: 1rem;
+            color: var(--gray);
+            font-weight: 400;
+        }
+
+        .pricing-card .old-price {
+            text-decoration: line-through;
+            color: var(--gray);
+            font-size: 1rem;
+        }
+
+        .pricing-card ul {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+
+        .pricing-card ul li {
+            padding: 0.5rem 0;
+            color: var(--light);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .pricing-card ul li i {
+            color: var(--emerald);
+            margin-top: 0.3rem;
+        }
+
+        .pricing-card .btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* ============================================================
+           FAQ
+           ============================================================ */
+        .faq {
+            background: var(--dark-2);
+        }
+
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--dark-3);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 1.5rem;
+            background: transparent;
+            border: none;
+            color: var(--light);
+            text-align: left;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: inherit;
+        }
+
+        .faq-question i {
+            transition: transform 0.2s;
+            color: var(--cyan);
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 1.5rem;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        .faq-answer p {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        /* ============================================================
+           CTA FINAL
+           ============================================================ */
+        .final-cta {
+            text-align: center;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(59, 130, 246, 0.1));
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .final-cta h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .final-cta p {
+            color: var(--gray);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ============================================================
+           FOOTER
+           ============================================================ */
+        footer {
+            background: var(--dark);
+            padding: 3rem 2rem 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--light);
+            font-weight: 700;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--cyan);
+        }
+
+        .footer-copy {
+            width: 100%;
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+
+        /* ============================================================
+           RESPONSIVO
+           ============================================================ */
+        @media (max-width: 900px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .hero-visual {
+                order: -1;
+            }
+
+            .navbar-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--dark-2);
+                flex-direction: column;
+                padding: 1rem 2rem;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            }
+
+            .navbar-links.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            section {
+                padding: 4rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <a href="#" class="navbar-brand">
+            <span class="navbar-brand-icon"><i class="fas fa-calendar-alt"></i></span>
+            Gridora
+        </a>
+        <ul class="navbar-links" id="navLinks">
+            <li><a href="#recursos">Recursos</a></li>
+            <li><a href="#como-funciona">Como funciona</a></li>
+            <li><a href="#precos">Preços</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#download" class="navbar-cta">Baixar grátis</a></li>
+        </ul>
+        <button class="mobile-menu-btn" onclick="document.getElementById('navLinks').classList.toggle('active')">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <span class="badge">
+                    <i class="fas fa-bolt"></i>
+                    Compatível com EC 141/2026
+                </span>
+                <h1>
+                    Escalas de trabalho <span class="gradient">perfeitas</span> em segundos, sem risco de multa.
+                </h1>
+                <p>
+                    Gere escalas 5x2, 6x1 e 4x3 que respeitam automaticamente todas as regras da CLT e da nova EC 141/2026. Funciona offline no seu Windows.
+                </p>
+                <div class="hero-ctas">
+                    <a href="#download" class="btn btn-primary">
+                        <i class="fas fa-download"></i>
+                        Testar grátis por 30 dias
+                    </a>
+                    <a href="#recursos" class="btn btn-secondary">
+                        <i class="fas fa-play-circle"></i>
+                        Ver recursos
+                    </a>
+                </div>
+                <div class="hero-trust">
+                    <span><i class="fas fa-check-circle"></i> Sem cartão de crédito</span>
+                    <span><i class="fas fa-check-circle"></i> Instalação em 2 minutos</span>
+                    <span><i class="fas fa-check-circle"></i> 100% offline</span>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-screenshot">
+                    <div class="hero-screenshot-placeholder">
+                        <div style="text-align: center;">
+                            <i class="fas fa-image" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
+                            Print do Gridora em ação<br>
+                            <small>(adicione uma imagem real aqui)</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROBLEMA -->
+    <section class="problem">
+        <div class="container">
+            <div class="section-header">
+                <span class="tag">O problema</span>
+                <h2>Fazer escalas no Excel está cada vez mais arriscado</h2>
+                <p>Com a EC 141/2026, as regras mudaram. Um erro pode custar caro.</p>
+            </div>
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <div class="icon"><i class="fas fa-gavel"></i></div>
+                    <h3>Multas trabalhistas</h3>
+                    <p>Escalas fora da conformidade podem gerar processos e multas de até 3x o salário do funcionário.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="icon"><i class="fas fa-clock"></i></div>
+                    <h3>Horas perdidas</h3>
+                    <p>Montar escalas manualmente no Excel leva horas e está sujeito a erros humanos constantes.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="icon"><i class="fas fa-exclamation-triangle"></i></div>
+                    <h3>Regras complexas</h3>
+                    <p>5x2, 6x1, 4x3, intermitente, temporário, folgas de domingo para mulheres... São muitas variáveis.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RECURSOS -->
+    <section id="recursos">
+        <div class="container">
+            <div class="section-header">
+                <span class="tag">Recursos</span>
+                <h2>Tudo que você precisa para escalas sem dor de cabeça</h2>
+                <p>Funcionalidades pensadas para gestores de RH e pequenas empresas.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="icon"><i class="fas fa-calendar-check"></i></div>
+                    <h3>Jornadas 5x2, 6x1 e 4x3</h3>
+                    <p>Geração automática respeitando folgas, descansos e limites legais de cada modalidade.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3>Conformidade EC 141/2026</h3>
+                    <p>Alertas automáticos de violações antes de você gerar a escala. Evite multas na origem.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon"><i class="fas fa-file-pdf"></i></div>
+                    <h3>Exportação em PDF</h3>
+                    <p>Relatórios prontos para imprimir ou enviar por e-mail, com layout profissional.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon"><i class="fas fa-wifi-slash"></i></div>
+                    <h3>100% Offline</h3>
+                    <p>Funciona no seu Windows sem internet. Seus dados ficam no seu computador, sempre.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon"><i class="fas fa-users"></i></div>
+                    <h3>Gestão de funcionários</h3>
+                    <p>Cadastre setores, turnos, contratos (CLT, intermitente, temporário) e gere escalas por filtro.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon"><i class="fas fa-database"></i></div>
+                    <h3>Backup e restauração</h3>
+                    <p>Backups automáticos diários e restauração completa em caso de necessidade.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMO FUNCIONA -->
+    <section id="como-funciona" class="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <span class="tag">Como funciona</span>
+                <h2>Do download à primeira escala em 3 passos</h2>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Baixe e instale</h3>
+                    <p>Download do instalador .exe para Windows. Instalação em menos de 2 minutos.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Cadastre sua equipe</h3>
+                    <p>Adicione funcionários, setores e turnos. O sistema guia você em cada passo.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Gere a escala</h3>
+                    <p>Escolha o período e clique em "Gerar". Pronto: escala conforme a CLT em segundos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PREÇOS -->
+    <section id="precos">
+        <div class="container">
+            <div class="section-header">
+                <span class="tag">Preços</span>
+                <h2>Um investimento que se paga no primeiro mês</h2>
+                <p>Escolha o plano ideal para o tamanho da sua operação.</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Plano Anual</h3>
+                    <div class="old-price">De R$ 497,90</div>
+                    <div class="price">R$ 248,95 <small>/ primeiro ano</small></div>
+                    <p style="color: var(--amber); font-size: 0.85rem; margin-bottom: 1rem;">
+                        <i class="fas fa-fire"></i> 50% OFF para os 20 primeiros
+                    </p>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 1 instalação Windows</li>
+                        <li><i class="fas fa-check"></i> Funcionários ilimitados</li>
+                        <li><i class="fas fa-check"></i> Exportação PDF ilimitada</li>
+                        <li><i class="fas fa-check"></i> Atualizações por 1 ano</li>
+                        <li><i class="fas fa-check"></i> Suporte por e-mail</li>
+                    </ul>
+                    <a href="#download" class="btn btn-secondary">Começar teste grátis</a>
+                </div>
+
+                <div class="pricing-card featured">
+                    <h3>Plano Bienal</h3>
+                    <div class="old-price">De R$ 995,80</div>
+                    <div class="price">R$ 846,43 <small>/ 2 anos</small></div>
+                    <p style="color: var(--emerald); font-size: 0.85rem; margin-bottom: 1rem;">
+                        <i class="fas fa-tag"></i> 15% de desconto
+                    </p>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Tudo do Plano Anual</li>
+                        <li><i class="fas fa-check"></i> Atualizações por 2 anos</li>
+                        <li><i class="fas fa-check"></i> Suporte prioritário</li>
+                        <li><i class="fas fa-check"></i> Backup na nuvem (em breve)</li>
+                        <li><i class="fas fa-check"></i> Economia de R$ 149,37</li>
+                    </ul>
+                    <a href="#download" class="btn btn-primary">Começar teste grátis</a>
+                </div>
+
+                <div class="pricing-card">
+                    <h3>Plano Trienal</h3>
+                    <div class="old-price">De R$ 1.493,70</div>
+                    <div class="price">R$ 1.045,59 <small>/ 3 anos</small></div>
+                    <p style="color: var(--cyan); font-size: 0.85rem; margin-bottom: 1rem;">
+                        <i class="fas fa-crown"></i> 30% de desconto
+                    </p>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Tudo do Plano Bienal</li>
+                        <li><i class="fas fa-check"></i> Atualizações por 3 anos</li>
+                        <li><i class="fas fa-check"></i> Suporte VIP</li>
+                        <li><i class="fas fa-check"></i> Economia de R$ 448,11</li>
+                        <li><i class="fas fa-check"></i> Melhor custo-benefício</li>
+                    </ul>
+                    <a href="#download" class="btn btn-secondary">Começar teste grátis</a>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: var(--dark-2); border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
+                <h3 style="margin-bottom: 0.5rem;"><i class="fas fa-building" style="color: var(--violet);"></i> Precisa de multi-usuário?</h3>
+                <p style="color: var(--gray); margin-bottom: 1rem;">Versão cliente-servidor (Docker) para equipes que precisam de acesso simultâneo.</p>
+                <div style="font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem;">R$ 1.493,70 <small style="font-size: 1rem; color: var(--gray); font-weight: 400;">+ instalação remota</small></div>
+                <a href="mailto:contato@gridora.com.br" class="btn btn-secondary" style="margin-top: 1rem;">
+                    <i class="fas fa-envelope"></i> Falar com vendas
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="faq">
+        <div class="container">
+            <div class="section-header">
+                <span class="tag">Dúvidas frequentes</span>
+                <h2>Tudo que você precisa saber</h2>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question" onclick="this.parentElement.classList.toggle('active')">
+                        O Gridora funciona sem internet?
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sim! O Gridora é 100% offline. Após a instalação, você não precisa de internet para usar. Seus dados ficam armazenados localmente no seu computador.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="this.parentElement.classList.toggle('active')">
+                        Quais sistemas operacionais são suportados?
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>A versão single-user (.exe) roda em Windows 10 e 11 (64 bits). A versão multi-usuário (Docker) roda em Windows, Linux e macOS.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="this.parentElement.classList.toggle('active')">
+                        O que acontece após os 30 dias de teste?
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Após 30 dias, o sistema continua funcionando em modo de visualização. Para gerar novas escalas, é necessário adquirir uma licença. Seus dados são preservados.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="this.parentElement.classList.toggle('active')">
+                        Como funciona a atualização?
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Durante o período da licença, você recebe todas as atualizações gratuitamente. Basta baixar a nova versão no site e instalar por cima da anterior. Seus dados são preservados.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="this.parentElement.classList.toggle('active')">
+                        Posso usar em mais de um computador?
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Cada licença é vinculada a um computador (via Hardware ID). Para usar em múltiplas máquinas, entre em contato para condições especiais ou considere a versão Docker multi-usuário.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="this.parentElement.classList.toggle('active')">
+                        Quais formas de pagamento são aceitas?
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Aceitamos PIX (com 10% de desconto adicional) e cartão de crédito em até 3x sem juros. Pagamento processado com segurança via SumUp.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section id="download" class="final-cta">
+        <div class="container">
+            <h2>Pronto para escalas sem dor de cabeça?</h2>
+            <p>Baixe agora e teste gratuitamente por 30 dias. Sem cartão de crédito, sem compromisso.</p>
+            <a href="https://github.com/elias-dantas/minha_escala/releases/latest" class="btn btn-primary" style="font-size: 1.1rem; padding: 1.1rem 2.5rem;">
+                <i class="fab fa-windows"></i>
+                Baixar Gridora para Windows
+            </a>
+            <p style="margin-top: 1rem; font-size: 0.85rem;">
+                <i class="fas fa-shield-alt"></i> Instalador verificado · ~45 MB · Windows 10/11 64-bit
+            </p>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <span class="navbar-brand-icon" style="width: 32px; height: 32px; font-size: 0.9rem;"><i class="fas fa-calendar-alt"></i></span>
+                Gridora
+            </div>
+            <ul class="footer-links">
+                <li><a href="#recursos">Recursos</a></li>
+                <li><a href="#precos">Preços</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="mailto:contato@gridora.com.br">Contato</a></li>
+            </ul>
+            <div class="footer-copy">
+                © 2026 Gridora. Todos os direitos reservados. · Desenvolvido por Elias Rangel Dantas
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Fecha menu mobile ao clicar em link
+        document.querySelectorAll('.navbar-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
