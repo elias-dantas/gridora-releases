@@ -219,6 +219,7 @@
         .btn {
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 0.5rem;
             padding: 0.9rem 1.8rem;
             border-radius: 10px;
@@ -287,19 +288,7 @@
         .hero-screenshot img {
             width: 100%;
             border-radius: 8px;
-        }
-
-        .hero-screenshot-placeholder {
-            width: 100%;
-            aspect-ratio: 16/10;
-            background: linear-gradient(135deg, var(--dark-3), var(--dark-2));
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--gray);
-            font-size: 0.9rem;
-            border: 2px dashed rgba(255, 255, 255, 0.1);
+            display: block;
         }
 
         /* ============================================================
@@ -496,6 +485,7 @@
             gap: 1.5rem;
             max-width: 1100px;
             margin: 0 auto;
+            align-items: stretch;
         }
 
         .pricing-card {
@@ -505,6 +495,8 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
             position: relative;
             transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
         }
 
         .pricing-card:hover {
@@ -529,23 +521,12 @@
             font-size: 0.7rem;
             font-weight: 700;
             letter-spacing: 1px;
+            white-space: nowrap;
         }
 
         .pricing-card h3 {
             font-size: 1.2rem;
             margin-bottom: 0.5rem;
-        }
-
-        .pricing-card .price {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin: 1rem 0;
-        }
-
-        .pricing-card .price small {
-            font-size: 1rem;
-            color: var(--gray);
-            font-weight: 400;
         }
 
         .pricing-card .old-price {
@@ -554,9 +535,41 @@
             font-size: 1rem;
         }
 
+        .pricing-card .price {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin: 0.5rem 0 0.5rem;
+            white-space: nowrap;
+            display: flex;
+            align-items: baseline;
+            gap: 0.4rem;
+        }
+
+        .pricing-card .price small {
+            font-size: 0.95rem;
+            color: var(--gray);
+            font-weight: 400;
+            white-space: nowrap;
+        }
+
+        .pricing-card .discount-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            min-height: 1.5rem;
+        }
+
+        .pricing-card .discount-label.amber { color: var(--amber); }
+        .pricing-card .discount-label.emerald { color: var(--emerald); }
+        .pricing-card .discount-label.cyan { color: var(--cyan); }
+
         .pricing-card ul {
             list-style: none;
-            margin: 1.5rem 0;
+            margin: 0 0 1.75rem;
+            flex: 1;
         }
 
         .pricing-card ul li {
@@ -573,9 +586,66 @@
             margin-top: 0.3rem;
         }
 
-        .pricing-card .btn {
+        .card-actions {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .card-actions .btn {
             width: 100%;
+        }
+
+        .card-test-link {
+            display: inline-flex;
+            align-items: center;
             justify-content: center;
+            gap: 0.4rem;
+            color: var(--gray);
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: color 0.2s;
+            padding: 0.25rem 0;
+        }
+
+        .card-test-link:hover {
+            color: var(--cyan);
+        }
+
+        .payment-note {
+            max-width: 720px;
+            margin: 2.5rem auto 0;
+            padding: 1.25rem 1.5rem;
+            background: var(--dark-3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+            color: var(--light);
+        }
+
+        .payment-note .item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .payment-note .item i {
+            color: var(--cyan);
+            font-size: 1.1rem;
+        }
+
+        .payment-note .item strong {
+            color: var(--emerald);
+        }
+
+        .payment-note .divider {
+            color: var(--gray);
         }
 
         /* ============================================================
@@ -755,6 +825,16 @@
             section {
                 padding: 4rem 1.5rem;
             }
+
+            .payment-note {
+                flex-direction: column;
+                gap: 0.75rem;
+                text-align: center;
+            }
+
+            .payment-note .divider {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -810,13 +890,7 @@
             </div>
             <div class="hero-visual">
                 <div class="hero-screenshot">
-                    <div class="hero-screenshot-placeholder">
-                        <div style="text-align: center;">
-                            <i class="fas fa-image" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
-                            Print do Gridora em ação<br>
-                            <small>(adicione uma imagem real aqui)</small>
-                        </div>
-                    </div>
+                    <img src="tela_inicial.png" alt="Gridora - Tela principal do sistema">
                 </div>
             </div>
         </div>
@@ -926,15 +1000,16 @@
             <div class="section-header">
                 <span class="tag">Preços</span>
                 <h2>Um investimento que se paga no primeiro mês</h2>
-                <p>Escolha o plano ideal para o tamanho da sua operação.</p>
+                <p>Todas as versões têm as mesmas funcionalidades. O que muda é o tempo de licença.</p>
             </div>
             <div class="pricing-grid">
+                <!-- Plano Anual -->
                 <div class="pricing-card">
                     <h3>Plano Anual</h3>
                     <div class="old-price">De R$ 497,90</div>
-                    <div class="price">R$ 248,95 <small>/ primeiro ano</small></div>
-                    <p style="color: var(--amber); font-size: 0.85rem; margin-bottom: 1rem;">
-                        <i class="fas fa-fire"></i> 50% OFF para os 20 primeiros
+                    <div class="price">R$ 348,53 <small>/ 1 ano</small></div>
+                    <p class="discount-label amber">
+                        <i class="fas fa-fire"></i> 30% OFF · 20 primeiras · 1º mês
                     </p>
                     <ul>
                         <li><i class="fas fa-check"></i> 1 instalação Windows</li>
@@ -943,49 +1018,93 @@
                         <li><i class="fas fa-check"></i> Atualizações por 1 ano</li>
                         <li><i class="fas fa-check"></i> Suporte por e-mail</li>
                     </ul>
-                    <a href="#download" class="btn btn-secondary">Começar teste grátis</a>
+                    <div class="card-actions">
+                        <!-- SUBSTITUA PELO LINK REAL DA SUMUP (Plano Anual) -->
+                        <a href="#" class="btn btn-primary" target="_blank" rel="noopener">
+                            <i class="fas fa-shopping-cart"></i> Comprar licença
+                        </a>
+                        <a href="https://github.com/elias-dantas/gridora-releases/releases/latest/download/Gridora_Setup.exe" class="card-test-link">
+                            <i class="fas fa-download"></i> Testar grátis por 30 dias
+                        </a>
+                    </div>
                 </div>
 
+                <!-- Plano Bienal (Destaque) -->
                 <div class="pricing-card featured">
                     <h3>Plano Bienal</h3>
                     <div class="old-price">De R$ 995,80</div>
                     <div class="price">R$ 846,43 <small>/ 2 anos</small></div>
-                    <p style="color: var(--emerald); font-size: 0.85rem; margin-bottom: 1rem;">
+                    <p class="discount-label emerald">
                         <i class="fas fa-tag"></i> 15% de desconto
                     </p>
                     <ul>
-                        <li><i class="fas fa-check"></i> Tudo do Plano Anual</li>
+                        <li><i class="fas fa-check"></i> 1 instalação Windows</li>
+                        <li><i class="fas fa-check"></i> Funcionários ilimitados</li>
+                        <li><i class="fas fa-check"></i> Exportação PDF ilimitada</li>
                         <li><i class="fas fa-check"></i> Atualizações por 2 anos</li>
-                        <li><i class="fas fa-check"></i> Suporte prioritário</li>
-                        <li><i class="fas fa-check"></i> Backup na nuvem (em breve)</li>
-                        <li><i class="fas fa-check"></i> Economia de R$ 149,37</li>
+                        <li><i class="fas fa-check"></i> Suporte por e-mail</li>
                     </ul>
-                    <a href="#download" class="btn btn-primary">Começar teste grátis</a>
+                    <div class="card-actions">
+                        <!-- SUBSTITUA PELO LINK REAL DA SUMUP (Plano Bienal) -->
+                        <a href="#" class="btn btn-primary" target="_blank" rel="noopener">
+                            <i class="fas fa-shopping-cart"></i> Comprar licença
+                        </a>
+                        <a href="https://github.com/elias-dantas/gridora-releases/releases/latest/download/Gridora_Setup.exe" class="card-test-link">
+                            <i class="fas fa-download"></i> Testar grátis por 30 dias
+                        </a>
+                    </div>
                 </div>
 
+                <!-- Plano Trienal -->
                 <div class="pricing-card">
                     <h3>Plano Trienal</h3>
                     <div class="old-price">De R$ 1.493,70</div>
                     <div class="price">R$ 1.045,59 <small>/ 3 anos</small></div>
-                    <p style="color: var(--cyan); font-size: 0.85rem; margin-bottom: 1rem;">
+                    <p class="discount-label cyan">
                         <i class="fas fa-crown"></i> 30% de desconto
                     </p>
                     <ul>
-                        <li><i class="fas fa-check"></i> Tudo do Plano Bienal</li>
+                        <li><i class="fas fa-check"></i> 1 instalação Windows</li>
+                        <li><i class="fas fa-check"></i> Funcionários ilimitados</li>
+                        <li><i class="fas fa-check"></i> Exportação PDF ilimitada</li>
                         <li><i class="fas fa-check"></i> Atualizações por 3 anos</li>
-                        <li><i class="fas fa-check"></i> Suporte VIP</li>
-                        <li><i class="fas fa-check"></i> Economia de R$ 448,11</li>
-                        <li><i class="fas fa-check"></i> Melhor custo-benefício</li>
+                        <li><i class="fas fa-check"></i> Suporte por e-mail</li>
                     </ul>
-                    <a href="#download" class="btn btn-secondary">Começar teste grátis</a>
+                    <div class="card-actions">
+                        <!-- SUBSTITUA PELO LINK REAL DA SUMUP (Plano Trienal) -->
+                        <a href="#" class="btn btn-primary" target="_blank" rel="noopener">
+                            <i class="fas fa-shopping-cart"></i> Comprar licença
+                        </a>
+                        <a href="https://github.com/elias-dantas/gridora-releases/releases/latest/download/Gridora_Setup.exe" class="card-test-link">
+                            <i class="fas fa-download"></i> Testar grátis por 30 dias
+                        </a>
+                    </div>
                 </div>
+            </div>
+
+            <!-- Nota única de formas de pagamento -->
+            <div class="payment-note">
+                <span class="item">
+                    <i class="fas fa-qrcode"></i>
+                    <span><strong>10% OFF</strong> no PIX à vista</span>
+                </span>
+                <span class="divider">·</span>
+                <span class="item">
+                    <i class="fas fa-credit-card"></i>
+                    <span>ou em <strong>até 3x sem juros</strong> no cartão</span>
+                </span>
+                <span class="divider">·</span>
+                <span class="item">
+                    <i class="fas fa-lock"></i>
+                    <span>Pagamento seguro via SumUp</span>
+                </span>
             </div>
 
             <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: var(--dark-2); border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
                 <h3 style="margin-bottom: 0.5rem;"><i class="fas fa-building" style="color: var(--violet);"></i> Precisa de multi-usuário?</h3>
                 <p style="color: var(--gray); margin-bottom: 1rem;">Versão cliente-servidor (Docker) para equipes que precisam de acesso simultâneo.</p>
                 <div style="font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem;">R$ 1.493,70 <small style="font-size: 1rem; color: var(--gray); font-weight: 400;">+ instalação remota</small></div>
-                <a href="mailto:contato@gridora.com.br" class="btn btn-secondary" style="margin-top: 1rem;">
+                <a href="mailto:comercial.gridora@gmail.com" class="btn btn-secondary" style="margin-top: 1rem;">
                     <i class="fas fa-envelope"></i> Falar com vendas
                 </a>
             </div>
@@ -1054,6 +1173,15 @@
                         <p>Aceitamos PIX (com 10% de desconto adicional) e cartão de crédito em até 3x sem juros. Pagamento processado com segurança via SumUp.</p>
                     </div>
                 </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="this.parentElement.classList.toggle('active')">
+                        Como recebo minha licença após a compra?
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Após o pagamento, você receberá um e-mail com as instruções. Basta abrir o Gridora, copiar o ID do seu computador exibido na tela de ativação e enviá-lo por e-mail. Em até 24h úteis você recebe sua chave de licença personalizada.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -1063,7 +1191,7 @@
         <div class="container">
             <h2>Pronto para escalas sem dor de cabeça?</h2>
             <p>Baixe agora e teste gratuitamente por 30 dias. Sem cartão de crédito, sem compromisso.</p>
-            <a href="https://github.com/elias-dantas/minha_escala/releases/latest" class="btn btn-primary" style="font-size: 1.1rem; padding: 1.1rem 2.5rem;">
+            <a href="https://github.com/elias-dantas/gridora-releases/releases/latest/download/Gridora_Setup.exe" class="btn btn-primary" style="font-size: 1.1rem; padding: 1.1rem 2.5rem;">
                 <i class="fab fa-windows"></i>
                 Baixar Gridora para Windows
             </a>
@@ -1084,7 +1212,7 @@
                 <li><a href="#recursos">Recursos</a></li>
                 <li><a href="#precos">Preços</a></li>
                 <li><a href="#faq">FAQ</a></li>
-                <li><a href="mailto:contato@gridora.com.br">Contato</a></li>
+                <li><a href="mailto:comercial.gridora@gmail.com">Contato</a></li>
             </ul>
             <div class="footer-copy">
                 © 2026 Gridora. Todos os direitos reservados. · Desenvolvido por Elias Rangel Dantas
