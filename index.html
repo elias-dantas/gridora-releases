@@ -649,6 +649,44 @@
         }
 
         /* ============================================================
+           CONTATO (NOVO)
+           ============================================================ */
+        .contact {
+            background: var(--dark-2);
+        }
+
+        .contact-form-wrapper {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--dark-3);
+            padding: 3rem 2.5rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+        }
+
+        .contact-form-wrapper p {
+            color: var(--gray);
+            margin-bottom: 2rem;
+            font-size: 1.05rem;
+        }
+
+        .contact-form-wrapper .btn {
+            font-size: 1.1rem;
+            padding: 1rem 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-form-wrapper .security-note {
+            font-size: 0.85rem;
+            color: var(--gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        /* ============================================================
            FAQ
            ============================================================ */
         .faq {
@@ -851,6 +889,7 @@
             <li><a href="#como-funciona">Como funciona</a></li>
             <li><a href="#precos">Preços</a></li>
             <li><a href="#faq">FAQ</a></li>
+            <li><a href="#contato">Contato</a></li>
             <li><a href="#download" class="navbar-cta">Baixar grátis</a></li>
         </ul>
         <button class="mobile-menu-btn" onclick="document.getElementById('navLinks').classList.toggle('active')">
@@ -998,30 +1037,29 @@
     <section id="precos">
         <div class="container">
             <div class="section-header">
-                <span class="tag">Preços</span>
-                <h2>Um investimento que se paga no primeiro mês</h2>
-                <p>Todas as versões têm as mesmas funcionalidades. O que muda é o tempo de licença.</p>
+                <span class="tag">Planos e Preços</span>
+                <h2>Escolha o período da sua licença de uso</h2>
+                <p>Modelo de licença anual (renovável), com as mesmas funcionalidades em todos os planos.</p>
             </div>
             <div class="pricing-grid">
                 <!-- Plano Anual -->
                 <div class="pricing-card">
-                    <h3>Plano Anual</h3>
+                    <h3>Licença Anual</h3>
                     <div class="old-price">De R$ 497,90</div>
                     <div class="price">R$ 348,53 <small>/ 1 ano</small></div>
                     <p class="discount-label amber">
-                        <i class="fas fa-fire"></i> 30% OFF · 20 primeiras · 1º mês
+                        <i class="fas fa-fire"></i> 30% OFF · Apenas 20 unidades
                     </p>
                     <ul>
-                        <li><i class="fas fa-check"></i> 1 instalação Windows</li>
+                        <li><i class="fas fa-check"></i> Licença de uso por 1 ano</li>
                         <li><i class="fas fa-check"></i> Funcionários ilimitados</li>
                         <li><i class="fas fa-check"></i> Exportação PDF ilimitada</li>
-                        <li><i class="fas fa-check"></i> Atualizações por 1 ano</li>
+                        <li><i class="fas fa-check"></i> Atualizações inclusas no período</li>
                         <li><i class="fas fa-check"></i> Suporte por e-mail</li>
                     </ul>
                     <div class="card-actions">
-                        <!-- SUBSTITUA PELO LINK REAL DA SUMUP (Plano Anual) -->
-                        <a href="#" class="btn btn-primary" target="_blank" rel="noopener">
-                            <i class="fas fa-shopping-cart"></i> Comprar licença
+                        <a href="https://gridora-com-br.sumupstore.com/product/licenca-gridora-sistema-inteligente-de-gestao-de-escalas-anual" class="btn btn-primary" target="_blank" rel="noopener">
+                            <i class="fas fa-shopping-cart"></i> Garantir minha licença
                         </a>
                         <a href="https://github.com/elias-dantas/gridora-releases/releases/latest/download/Gridora_Setup.exe" class="card-test-link">
                             <i class="fas fa-download"></i> Testar grátis por 30 dias
@@ -1029,25 +1067,24 @@
                     </div>
                 </div>
 
-                <!-- Plano Bienal (Destaque) -->
+                <!-- Plano Bienal -->
                 <div class="pricing-card featured">
-                    <h3>Plano Bienal</h3>
+                    <h3>Licença Bienal</h3>
                     <div class="old-price">De R$ 995,80</div>
                     <div class="price">R$ 846,43 <small>/ 2 anos</small></div>
                     <p class="discount-label emerald">
                         <i class="fas fa-tag"></i> 15% de desconto
                     </p>
                     <ul>
-                        <li><i class="fas fa-check"></i> 1 instalação Windows</li>
+                        <li><i class="fas fa-check"></i> Licença de uso por 2 anos</li>
                         <li><i class="fas fa-check"></i> Funcionários ilimitados</li>
                         <li><i class="fas fa-check"></i> Exportação PDF ilimitada</li>
-                        <li><i class="fas fa-check"></i> Atualizações por 2 anos</li>
+                        <li><i class="fas fa-check"></i> Atualizações inclusas no período</li>
                         <li><i class="fas fa-check"></i> Suporte por e-mail</li>
                     </ul>
                     <div class="card-actions">
-                        <!-- SUBSTITUA PELO LINK REAL DA SUMUP (Plano Bienal) -->
-                        <a href="#" class="btn btn-primary" target="_blank" rel="noopener">
-                            <i class="fas fa-shopping-cart"></i> Comprar licença
+                        <a href="https://gridora-com-br.sumupstore.com/product/licenca-gridora-sistema-inteligente-de-gestao-de-escalas-bienal" class="btn btn-primary" target="_blank" rel="noopener">
+                            <i class="fas fa-shopping-cart"></i> Garantir minha licença
                         </a>
                         <a href="https://github.com/elias-dantas/gridora-releases/releases/latest/download/Gridora_Setup.exe" class="card-test-link">
                             <i class="fas fa-download"></i> Testar grátis por 30 dias
@@ -1057,23 +1094,22 @@
 
                 <!-- Plano Trienal -->
                 <div class="pricing-card">
-                    <h3>Plano Trienal</h3>
+                    <h3>Licença Trienal</h3>
                     <div class="old-price">De R$ 1.493,70</div>
                     <div class="price">R$ 1.045,59 <small>/ 3 anos</small></div>
                     <p class="discount-label cyan">
                         <i class="fas fa-crown"></i> 30% de desconto
                     </p>
                     <ul>
-                        <li><i class="fas fa-check"></i> 1 instalação Windows</li>
+                        <li><i class="fas fa-check"></i> Licença de uso por 3 anos</li>
                         <li><i class="fas fa-check"></i> Funcionários ilimitados</li>
                         <li><i class="fas fa-check"></i> Exportação PDF ilimitada</li>
-                        <li><i class="fas fa-check"></i> Atualizações por 3 anos</li>
+                        <li><i class="fas fa-check"></i> Atualizações inclusas no período</li>
                         <li><i class="fas fa-check"></i> Suporte por e-mail</li>
                     </ul>
                     <div class="card-actions">
-                        <!-- SUBSTITUA PELO LINK REAL DA SUMUP (Plano Trienal) -->
-                        <a href="#" class="btn btn-primary" target="_blank" rel="noopener">
-                            <i class="fas fa-shopping-cart"></i> Comprar licença
+                        <a href="https://gridora-com-br.sumupstore.com/product/licenca-gridora-sistema-inteligente-de-gestao-de-escalas-trienal" class="btn btn-primary" target="_blank" rel="noopener">
+                            <i class="fas fa-shopping-cart"></i> Garantir minha licença
                         </a>
                         <a href="https://github.com/elias-dantas/gridora-releases/releases/latest/download/Gridora_Setup.exe" class="card-test-link">
                             <i class="fas fa-download"></i> Testar grátis por 30 dias
@@ -1082,28 +1118,28 @@
                 </div>
             </div>
 
-            <!-- Nota única de formas de pagamento -->
+            <!-- Nota de pagamento e modelo de licença atualizada -->
             <div class="payment-note">
                 <span class="item">
-                    <i class="fas fa-qrcode"></i>
-                    <span><strong>10% OFF</strong> no PIX à vista</span>
-                </span>
-                <span class="divider">·</span>
-                <span class="item">
-                    <i class="fas fa-credit-card"></i>
-                    <span>ou em <strong>até 3x sem juros</strong> no cartão</span>
+                    <i class="fas fa-sync-alt"></i>
+                    <span>Modelo de <strong>Licença de Uso Anual</strong> (renovável)</span>
                 </span>
                 <span class="divider">·</span>
                 <span class="item">
                     <i class="fas fa-lock"></i>
-                    <span>Pagamento seguro via SumUp</span>
+                    <span>Pagamento seguro via <strong>SumUp</strong> (PIX ou Cartão)</span>
+                </span>
+                <span class="divider">·</span>
+                <span class="item">
+                    <i class="fas fa-bolt"></i>
+                    <span>Chave de ativação enviada por e-mail em até 24h</span>
                 </span>
             </div>
 
             <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: var(--dark-2); border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
                 <h3 style="margin-bottom: 0.5rem;"><i class="fas fa-building" style="color: var(--violet);"></i> Precisa de multi-usuário?</h3>
                 <p style="color: var(--gray); margin-bottom: 1rem;">Versão cliente-servidor (Docker) para equipes que precisam de acesso simultâneo.</p>
-                <div style="font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem;">R$ 1.493,70 <small style="font-size: 1rem; color: var(--gray); font-weight: 400;">+ instalação remota</small></div>
+                <div style="font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem;">R$ 1.493,70 <small style="font-size: 1rem; color: var(--gray); font-weight: 400;">/ ano + instalação remota</small></div>
                 <a href="mailto:comercial.gridora@gmail.com" class="btn btn-secondary" style="margin-top: 1rem;">
                     <i class="fas fa-envelope"></i> Falar com vendas
                 </a>
@@ -1170,7 +1206,7 @@
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="faq-answer">
-                        <p>Aceitamos PIX (com 10% de desconto adicional) e cartão de crédito em até 3x sem juros. Pagamento processado com segurança via SumUp.</p>
+                        <p>Aceitamos PIX e cartão de crédito em até 3x sem juros. Pagamento processado com segurança via SumUp.</p>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -1181,6 +1217,29 @@
                     <div class="faq-answer">
                         <p>Após o pagamento, você receberá um e-mail com as instruções. Basta abrir o Gridora, copiar o ID do seu computador exibido na tela de ativação e enviá-lo por e-mail. Em até 24h úteis você recebe sua chave de licença personalizada.</p>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTATO (NOVO) -->
+    <section id="contato" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <span class="tag">Fale Conosco</span>
+                <h2>Tem dúvidas ou quer falar com vendas?</h2>
+                <p>Preencha o formulário e nossa equipe comercial entrará em contato em até 24 horas úteis.</p>
+            </div>
+            <div class="contact-form-wrapper">
+                <p>
+                    Para garantir o melhor atendimento e a segurança dos seus dados, utilizamos nosso formulário oficial de contato.
+                </p>
+                <a href="https://forms.gle/b7WYaqjiB3LJL1LRA" target="_blank" rel="noopener" class="btn btn-primary">
+                    <i class="fas fa-external-link-alt" style="margin-right: 0.5rem;"></i> Abrir Formulário de Contato
+                </a>
+                <div class="security-note">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Seus dados estão seguros e não serão compartilhados.</span>
                 </div>
             </div>
         </div>
@@ -1212,7 +1271,7 @@
                 <li><a href="#recursos">Recursos</a></li>
                 <li><a href="#precos">Preços</a></li>
                 <li><a href="#faq">FAQ</a></li>
-                <li><a href="mailto:comercial.gridora@gmail.com">Contato</a></li>
+                <li><a href="#contato">Contato</a></li>
             </ul>
             <div class="footer-copy">
                 © 2026 Gridora. Todos os direitos reservados. · Desenvolvido por Elias Rangel Dantas
