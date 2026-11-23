@@ -7,6 +7,9 @@
     <meta name="keywords" content="escala de trabalho, 5x2, 6x1, 4x3, EC 141/2026, CLT, gestão de escalas, software offline">
     <title>Gridora - Escalas de Trabalho 100% dentro da CLT</title>
 
+    <!-- ✅ FAVICON -->
+    <link rel="icon" type="image/png" href="icons/icon-40.png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -85,6 +88,14 @@
             font-size: 1.1rem;
             color: #fff;
             box-shadow: 0 4px 12px rgba(6, 182, 212, 0.35);
+            overflow: hidden;
+        }
+
+        /* ✅ Ajuste para a imagem da logo */
+        .navbar-brand-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .navbar-links {
@@ -649,7 +660,7 @@
         }
 
         /* ============================================================
-           CONTATO (NOVO)
+           CONTATO
            ============================================================ */
         .contact {
             background: var(--dark-2);
@@ -881,7 +892,10 @@
     <!-- NAVBAR -->
     <nav class="navbar">
         <a href="#" class="navbar-brand">
-            <span class="navbar-brand-icon"><i class="fas fa-calendar-alt"></i></span>
+            <!-- ✅ LOGO na navbar -->
+            <span class="navbar-brand-icon">
+                <img src="icons/icon-40.png" alt="Logo Gridora">
+            </span>
             Gridora
         </a>
         <ul class="navbar-links" id="navLinks">
@@ -1118,7 +1132,7 @@
                 </div>
             </div>
 
-            <!-- Nota de pagamento e modelo de licença atualizada -->
+            <!-- Nota de pagamento e modelo de licença -->
             <div class="payment-note">
                 <span class="item">
                     <i class="fas fa-sync-alt"></i>
@@ -1222,7 +1236,7 @@
         </div>
     </section>
 
-    <!-- CONTATO (NOVO) -->
+    <!-- CONTATO -->
     <section id="contato" class="contact">
         <div class="container">
             <div class="section-header">
@@ -1264,7 +1278,10 @@
     <footer>
         <div class="footer-content">
             <div class="footer-brand">
-                <span class="navbar-brand-icon" style="width: 32px; height: 32px; font-size: 0.9rem;"><i class="fas fa-calendar-alt"></i></span>
+                <!-- ✅ LOGO no footer -->
+                <span class="navbar-brand-icon" style="width: 32px; height: 32px;">
+                    <img src="icons/icon-40.png" alt="Logo Gridora">
+                </span>
                 Gridora
             </div>
             <ul class="footer-links">
