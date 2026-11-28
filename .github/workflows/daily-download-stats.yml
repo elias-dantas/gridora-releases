@@ -1,42 +1,50 @@
-name: Relatório Diário de Downloads
+# ==============================================================================
+# Gridora - Relatório Diário de Downloads
+# Consulta a API do GitHub, gera report.html (tabela) e envia por e-mail.
+# ==============================================================================
+name: Daily Download Stats
 
 on:
   schedule:
-    # Roda todos os dias às 09:00 UTC (06:00 no horário de Brasília)
+    # Todos os dias às 09:00 UTC (06:00 Brasília)
     - cron: '0 9 * * *'
-  # Permite rodar manualmente pela aba Actions para testar agora
-  workflow_dispatch:
+  workflow_dispatch:   # botão "Run workflow" para testar agora
+
+permissions:
+  contents: read
 
 jobs:
-  send-stats:
+  report:
     runs-on: ubuntu-latest
     steps:
-      - name: Buscar estatísticas de releases
-        id: stats
+      - name: Consultar releases e gerar relatório HTML
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Gera um relatório em formato HTML simples para melhor visualização
-          echo "<h2 style='font-family: Arial, sans-serif;'>📊 Relatório Diário de Downloads - Gridora</h2>" > report.html
-          echo "<p style='font-family: Arial, sans-serif; color: #666;'>Data da consulta: $(date +%d/%m/%Y)</p>" >> report.html
-          echo "<table style='border-collapse: collapse; width: 100%; font-family: Arial, sans-serif; margin-top: 10px;'>" >> report.html
-          echo "<tr style='background-color: #f4f4f4;'><th style='padding: 8px; border: 1px solid #ddd; text-align: left;'>Versão</th><th style='padding: 8px; border: 1px solid #ddd; text-align: left;'>Data</th><th style='padding: 8px; border: 1px solid #ddd; text-align: left;'>Arquivo</th><th style='padding: 8px; border: 1px solid #ddd; text-align: center;'>Total Downloads</th></tr>" >> report.html
+          RELEASES_JSON=$(gh api "repos/${{ github.repository }}/releases?per_page=100")
+          TOTAL=$(echo "$RELEASES_JSON" | jq '[.[].assets[].download_count] | add // 0')
 
-          # Consulta a API e formata cada release como uma linha da tabela
-          gh api repos/${{ github.repository }}/releases --jq '.[] | "<tr><td style=\"padding: 8px; border: 1px solid #ddd;\">\(.tag_name)</td><td style=\"padding: 8px; border: 1px solid #ddd;\">\(.published_at[:10])</td><td style=\"padding: 8px; border: 1px solid #ddd;\">\(.assets[0].name // \"Sem arquivo\")</td><td style=\"padding: 8px; border: 1px solid #ddd; text-align: center; font-weight: bold;\">\(.assets[0].download_count // 0)</td></tr>"' >> report.html
-
-          echo "</table>" >> report.html
-          echo "<p style='font-family: Arial, sans-serif; color: #666; font-size: 12px; margin-top: 20px;'><em>Relatório gerado automaticamente pelo GitHub Actions.</em></p>" >> report.html
+          {
+            echo "<html><body style='font-family:Arial,sans-serif;'>"
+            echo "<h2>📥 Downloads do Gridora — $(date -u +%d/%m/%Y)</h2>"
+            echo "<p><strong>Total acumulado:</strong> ${TOTAL} downloads</p>"
+            echo "<table border='1' cellpadding='8' style='border-collapse:collapse;'>"
+            echo "<tr style='background:#1a1a2e;color:#fff;'><th>Release</th><th>Data</th><th>Arquivo</th><th>Downloads</th></tr>"
+            echo "$RELEASES_JSON" | jq -r '.[] | . as $rel | .assets[] | "<tr><td>\($rel.tag_name)</td><td>\($rel.published_at[:10])</td><td>\(.name)</td><td>\(.download_count)</td></tr>"'
+            echo "</table>"
+            echo "<p style='color:#888;font-size:12px;'>Relatório automático — GitHub Actions</p>"
+            echo "</body></html>"
+          } > report.html
 
       - name: Enviar e-mail com o relatório
         uses: dawidd6/action-send-mail@v3
         with:
-          server_address: smtp.gmail.com # Corrigido: era "://gmail.com" na pesquisa
+          server_address: smtp.gmail.com
           server_port: 465
           secure: true
           username: ${{ secrets.MAIL_USERNAME }}
           password: ${{ secrets.MAIL_PASSWORD }}
-          subject: "📊 Downloads Gridora - ${{ github.repository }}"
+          subject: "📥 Downloads Gridora - ${{ github.repository }}"
           to: ${{ secrets.MAIL_TO }}
           from: "Gridora Bot <${{ secrets.MAIL_USERNAME }}>"
-          html_body: file://report.html # Envia como HTML para renderizar a tabela
+          html_body: file://report.html
